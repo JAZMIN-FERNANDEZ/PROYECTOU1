@@ -81,8 +81,8 @@ public class clienteControlador {
     Cliente c = listaClientes.get(filaSeleccionada);
     java.time.LocalDate fecha = java.time.LocalDate.now();
 
-    // Obtener autos y servicios
-    java.util.ArrayList<Auto> autos = vista.getControladorAuto().getListaAutos();
+    // Obtener TODOS los autos y filtrar solo los de este cliente
+    java.util.ArrayList<Auto> todosAutos = vista.getControladorAuto().getTodosLosAutos();
     java.util.HashMap<Integer, java.util.ArrayList<String>> serviciosPorAuto = 
         vista.getControladorServicios().getServiciosPorAuto();
 
@@ -96,11 +96,16 @@ public class clienteControlador {
     ticket.append("-------------------------------------\n");
 
     double total = 0;
+    boolean tieneServicios = false;
 
-    for (Auto auto : autos) {
+    for (Auto auto : todosAutos) {
+        // Solo autos de este cliente
+        if (auto.getId_cliente() != c.getId_cliente()) continue;
+
         java.util.ArrayList<String> servicios = serviciosPorAuto.get(auto.getId_auto());
         if (servicios == null || servicios.isEmpty()) continue;
 
+        tieneServicios = true;
         ticket.append("\nVEHÍCULO:  ").append(auto.getModelo())
               .append(" (").append(auto.getTipo()).append(") - ")
               .append(auto.getColor()).append("\n");
@@ -111,6 +116,10 @@ public class clienteControlador {
                   .append(" ............. $").append(String.format("%.2f", precio)).append("\n");
             total += precio;
         }
+    }
+
+    if (!tieneServicios) {
+        ticket.append("\n  (Sin servicios asignados)\n");
     }
 
     ticket.append("\n=====================================\n");

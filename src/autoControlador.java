@@ -16,20 +16,27 @@ import javax.swing.table.DefaultTableModel;
 
 public class autoControlador {
     private Vista vista;
-    private ArrayList<Auto> listaAutos;
+    // Todos los autos de todos los clientes
+    private ArrayList<Auto> todosLosAutos;
+    // Autos del cliente activo (pendientes de guardar)
+    private ArrayList<Auto> autosClienteActivo;
     private int idClienteActivo;
+    private String nombreClienteActivo;
     private int contadorAuto = 1;
 
     public autoControlador(Vista vista) {
         this.vista = vista;
-        this.listaAutos = new ArrayList<>();
+        this.todosLosAutos = new ArrayList<>();
+        this.autosClienteActivo = new ArrayList<>();
         vista.inicializarTablaAutos();
     }
 
     public void setClienteActivo(int idCliente, String nombreCompleto) {
-        this.idClienteActivo = idCliente;
-        vista.setClienteActivo(nombreCompleto);
-    }
+    this.idClienteActivo = idCliente;
+    this.nombreClienteActivo = nombreCompleto;
+    vista.setClienteActivo(nombreCompleto);
+    
+}
 
     public int getSiguienteIdAuto() {
         return contadorAuto++;
@@ -44,16 +51,19 @@ public class autoControlador {
             return;
         }
 
-        listaAutos.clear();
+        // Quitar autos previos de este cliente (re-guardado)
+        todosLosAutos.removeIf(a -> a.getId_cliente() == idClienteActivo);
+        autosClienteActivo = new ArrayList<>();
 
         for (int i = 0; i < filas; i++) {
+            // Columnas: 0=ID Auto, 1=Cliente(display), 2=Modelo, 3=Color, 4=Tipo, 5=Obs, 6=Cita, 7=Hora
             String idStr       = String.valueOf(modelo.getValueAt(i, 0)).trim();
-            String modelo_auto = String.valueOf(modelo.getValueAt(i, 1)).trim();
-            String color       = String.valueOf(modelo.getValueAt(i, 2)).trim();
-            String tipo        = String.valueOf(modelo.getValueAt(i, 3)).trim();
-            String obs         = String.valueOf(modelo.getValueAt(i, 4)).trim();
-            String citaStr     = String.valueOf(modelo.getValueAt(i, 5)).trim().toLowerCase();
-            String horaStr     = String.valueOf(modelo.getValueAt(i, 6)).trim();
+            String modelo_auto = String.valueOf(modelo.getValueAt(i, 2)).trim();
+            String color       = String.valueOf(modelo.getValueAt(i, 3)).trim();
+            String tipo        = String.valueOf(modelo.getValueAt(i, 4)).trim();
+            String obs         = String.valueOf(modelo.getValueAt(i, 5)).trim();
+            String citaStr     = String.valueOf(modelo.getValueAt(i, 6)).trim().toLowerCase();
+            String horaStr     = String.valueOf(modelo.getValueAt(i, 7)).trim();
 
             if (idStr.isEmpty() || modelo_auto.isEmpty() || color.isEmpty() || tipo.isEmpty()) {
                 JOptionPane.showMessageDialog(vista, "Fila " + (i+1) + ": completa ID, Modelo, Color y Tipo.");
@@ -81,15 +91,23 @@ public class autoControlador {
             }
 
             Auto auto = new Auto(idAuto, modelo_auto, color, tipo, obs, cita, hora);
-            listaAutos.add(auto);
+            auto.setId_cliente(idClienteActivo);
+            autosClienteActivo.add(auto);
+            todosLosAutos.add(auto);
         }
 
-        JOptionPane.showMessageDialog(vista, "Autos guardados: " + listaAutos.size());
-        vista.habilitarTab(2); 
-        vista.getControladorServicios().cargarAutos(listaAutos, vista.getClienteActivo());
+        JOptionPane.showMessageDialog(vista, "Autos guardados: " + autosClienteActivo.size());
+        vista.habilitarTab(2);
+        vista.getControladorServicios().cargarAutos(autosClienteActivo, nombreClienteActivo);
     }
 
+    /** Autos del cliente activo (para la pantalla de servicios) */
     public ArrayList<Auto> getListaAutos() {
-        return listaAutos;
+        return autosClienteActivo;
+    }
+
+    /** Todos los autos de todos los clientes (para el ticket) */
+    public ArrayList<Auto> getTodosLosAutos() {
+        return todosLosAutos;
     }
 }

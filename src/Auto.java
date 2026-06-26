@@ -1,6 +1,7 @@
 public class Auto {
 
     private int id_auto;
+    private int id_cliente;   // cliente propietario
     private String modelo;
     private String color;
     private String tipo;
@@ -21,6 +22,9 @@ public class Auto {
         this.cita = cita;
         this.hora = hora;
     }
+
+    public int getId_cliente() { return id_cliente; }
+    public void setId_cliente(int id_cliente) { this.id_cliente = id_cliente; }
 
     public int getId_auto() {
         return id_auto;

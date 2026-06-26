@@ -23,9 +23,9 @@ public class serviciosControlador {
     }
 
     public void cargarAutos(ArrayList<Auto> autos, String nombreCliente) {
-        this.listaAutos = autos;
-        vista.cargarAutosEnServicios(autos, nombreCliente);
-    }
+    this.listaAutos = autos;
+    vista.agregarAutosEnServicios(autos, nombreCliente);
+}
 
     public void asignarServicio() {
     int fila = vista.getTablaAutosServicios().getSelectedRow();
@@ -34,14 +34,17 @@ public class serviciosControlador {
         return;
     }
 
+    // ✅ Leer id_auto y tipo DIRECTAMENTE desde la tabla (no de listaAutos por índice)
+    int idAuto = (int) vista.getTablaAutosServicios().getValueAt(fila, 1);
+    String tipoAuto = (String) vista.getTablaAutosServicios().getValueAt(fila, 4);
+
     ArrayList<String> servicios = new ArrayList<>();
     if (vista.getCheckExterior().isSelected()) servicios.add("Lavado Exterior");
     if (vista.getCheckInterior().isSelected()) servicios.add("Lavado Interior");
     if (vista.getCheckEncerado().isSelected())  servicios.add("Encerado");
     if (vista.getCheckPulido().isSelected())    servicios.add("Pulido de Faros");
-    
-     Auto auto = listaAutos.get(fila);
-    if (auto.getTipo().equalsIgnoreCase("Moto")) {
+
+    if (tipoAuto.equalsIgnoreCase("Moto")) {
         servicios.remove("Lavado Interior");
         vista.getCheckInterior().setSelected(false);
         vista.getCheckInterior().setEnabled(false);
@@ -52,10 +55,8 @@ public class serviciosControlador {
         return;
     }
 
-    int idAuto = listaAutos.get(fila).getId_auto();
     serviciosPorAuto.put(idAuto, servicios);
 
-    // Limpiar checkboxes
     vista.getCheckExterior().setSelected(false);
     vista.getCheckInterior().setSelected(false);
     vista.getCheckEncerado().setSelected(false);
@@ -74,9 +75,9 @@ public class serviciosControlador {
         vista.getCheckInterior().setEnabled(true);
         return;
     }
-
-    Auto auto = listaAutos.get(fila);
-    boolean esMoto = auto.getTipo().equalsIgnoreCase("Moto");
+    
+    String tipoAuto = (String) vista.getTablaAutosServicios().getValueAt(fila, 4);
+    boolean esMoto = tipoAuto != null && tipoAuto.equalsIgnoreCase("Moto");
     vista.getCheckInterior().setEnabled(!esMoto);
     if (esMoto) vista.getCheckInterior().setSelected(false);
 }

@@ -194,16 +194,16 @@ public class Vista extends javax.swing.JFrame {
 
         jTableAutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Auto", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"
+                "ID Auto", "Cliente", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"
             }
         ));
         jScrollPane2.setViewportView(jTableAutos);
@@ -483,7 +483,12 @@ public class Vista extends javax.swing.JFrame {
                             .truncatedTo(java.time.temporal.ChronoUnit.MINUTES)
                             .toString();
     
-            modelo.addRow(new Object[]{String.format("%04d", controladorAuto.getSiguienteIdAuto()), "", "", "", "", "", horaActual});
+            // Columnas: ID Auto | Cliente | Modelo | Color | Tipo | Observaciones | Cita | Hora
+            modelo.addRow(new Object[]{
+                String.format("%04d", controladorAuto.getSiguienteIdAuto()),
+                jLabelClienteActivo.getText(),
+                "", "", "", "", "", horaActual
+            });
     }//GEN-LAST:event_jButtonAgregarAuto1ActionPerformed
 
     private void jCheckBoxExteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExteriorActionPerformed
@@ -596,18 +601,19 @@ public void habilitarTab(int indice) {
 public void inicializarTablaAutos() {
     javax.swing.table.DefaultTableModel modeloAutos = new javax.swing.table.DefaultTableModel(
         new Object[][]{},
-        new String[]{"ID Auto", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"}
+        new String[]{"ID Auto", "Cliente", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"}
     ) {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column != 0; // ID Auto no editable
+            // ID Auto y Cliente no editables
+            return column != 0 && column != 1;
         }
     };
     jTableAutos.setModel(modeloAutos);
     javax.swing.JComboBox<String> comboTipo = new javax.swing.JComboBox<>(
         new String[]{"Sedán", "SUV", "Pickup", "Moto"}
     );
-    jTableAutos.getColumnModel().getColumn(3)
+    jTableAutos.getColumnModel().getColumn(4)
         .setCellEditor(new javax.swing.DefaultCellEditor(comboTipo));
 }
 
@@ -644,6 +650,22 @@ public void cargarAutosEnServicios(java.util.ArrayList<Auto> autos, String nombr
     javax.swing.table.DefaultTableModel modelo = 
         (javax.swing.table.DefaultTableModel) jTableAutosServicios.getModel();
     modelo.setRowCount(0);
+    for (Auto a : autos) {
+        modelo.addRow(new Object[]{
+            nombreCliente,
+            a.getId_auto(),
+            a.getModelo(),
+            a.getColor(),
+            a.getTipo()
+        });
+    }
+}
+
+// Nuevo método: acumula autos sin borrar los anteriores
+public void agregarAutosEnServicios(java.util.ArrayList<Auto> autos, String nombreCliente) {
+    javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel) jTableAutosServicios.getModel();
+    // NO se llama setRowCount(0) — se acumulan todas las filas
     for (Auto a : autos) {
         modelo.addRow(new Object[]{
             nombreCliente,
