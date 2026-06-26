@@ -20,7 +20,9 @@ public class Vista extends javax.swing.JFrame {
     public Vista() {
         initComponents();
         
-    controlador = new clienteControlador(this);    }
+    controlador = new clienteControlador(this);
+    configurarTablaServicios();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -563,4 +565,44 @@ public javax.swing.JTextField getApellido() {
 public javax.swing.JTextField getTelefono() {
     return jTextField_Telefono;
 }
+
+// ── tabla para mostrar clientes ──
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.table.DefaultTableModel modeloTabla;
+
+    private void configurarTablaServicios() {
+        modeloTabla = new javax.swing.table.DefaultTableModel(
+            new String[]{"ID", "Nombre", "Apellido", "Teléfono"}, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tablaClientes = new javax.swing.JTable(modeloTabla);
+        tablaClientes.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        tablaClientes.setRowHeight(25);
+        tablaClientes.getTableHeader().setFont(new java.awt.Font("Segoe UI", 1, 13));
+
+        javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(tablaClientes);
+
+        javax.swing.JButton btnTicket = new javax.swing.JButton("Mostrar Ticket");
+        btnTicket.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnTicket.addActionListener(evt -> controlador.mostrarTicket(tablaClientes.getSelectedRow()));
+
+        javax.swing.JLabel titulo = new javax.swing.JLabel("Clientes Registrados");
+        titulo.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jPanelServicios.setLayout(new java.awt.BorderLayout(0, 10));
+        jPanelServicios.add(titulo, java.awt.BorderLayout.NORTH);
+        jPanelServicios.add(scroll, java.awt.BorderLayout.CENTER);
+        jPanelServicios.add(btnTicket, java.awt.BorderLayout.SOUTH);
+    }
+
+    public javax.swing.table.DefaultTableModel getModeloTabla() {
+        return modeloTabla;
+}
+
 }
