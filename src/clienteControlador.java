@@ -1,13 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author jazmi
- */
-//controlador
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -21,10 +11,10 @@ public class clienteControlador {
     }
 
     public void JButton_RegistroCliente() {
-        String id = vista.getIdCliente().getText();
-        String nombre = vista.getNombre().getText();
-        String apellido = vista.getApellido().getText();
-        String telefono = vista.getTelefono().getText();
+        String id = vista.getIdCliente().getText().trim();
+        String nombre = vista.getNombre().getText().trim();
+        String apellido = vista.getApellido().getText().trim();
+        String telefono = vista.getTelefono().getText().trim();
 
         if (id.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese el ID del cliente");
@@ -42,13 +32,10 @@ public class clienteControlador {
             JOptionPane.showMessageDialog(vista, "Ingrese el teléfono");
             return;
         }
-
-        
         if (!id.matches("\\d+")) {
             JOptionPane.showMessageDialog(vista, "El ID solo debe contener números");
             return;
         }
-
         if (!telefono.matches("\\d+")) {
             JOptionPane.showMessageDialog(vista, "El teléfono solo debe contener números");
             return;
@@ -56,7 +43,6 @@ public class clienteControlador {
 
         int idCliente = Integer.parseInt(id);
 
-     
         for (Cliente c : listaClientes) {
             if (c.getId_cliente() == idCliente) {
                 JOptionPane.showMessageDialog(vista, "Ya existe un cliente con ese ID");
@@ -68,13 +54,44 @@ public class clienteControlador {
         cliente.setId_cliente(idCliente);
         cliente.setNombre(nombre);
         cliente.setApellido(apellido);
-        cliente.setTelefono(telefono); 
-
+        cliente.setTelefono(telefono);
         listaClientes.add(cliente);
-        JOptionPane.showMessageDialog(vista,
-                "Cliente registrado correctamente "
-                + listaClientes.size());
+
+        // Agregar a la tabla
+        vista.getModeloTabla().addRow(new Object[]{idCliente, nombre, apellido, telefono});
+
+        JOptionPane.showMessageDialog(vista, "Cliente registrado correctamente. Total: " + listaClientes.size());
         limpiar();
+    }
+
+    public void mostrarTicket(int filaSeleccionada) {
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(vista,
+                "Selecciona un cliente de la tabla primero.",
+                "Sin selección",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Cliente c = listaClientes.get(filaSeleccionada);
+
+        String ticket =
+            "=============================\n" +
+            "       TICKET CLIENTE        \n" +
+            "=============================\n" +
+            "ID:        " + c.getId_cliente() + "\n" +
+            "Nombre:    " + c.getNombre()     + "\n" +
+            "Apellido:  " + c.getApellido()   + "\n" +
+            "Teléfono:  " + c.getTelefono()   + "\n" +
+            "=============================";
+
+        javax.swing.JTextArea texto = new javax.swing.JTextArea(ticket);
+        texto.setFont(new java.awt.Font("Monospaced", 0, 14));
+        texto.setEditable(false);
+
+        JOptionPane.showMessageDialog(vista, texto,
+            "Ticket del Cliente",
+            JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void limpiar() {
