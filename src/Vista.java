@@ -661,11 +661,9 @@ public void cargarAutosEnServicios(java.util.ArrayList<Auto> autos, String nombr
     }
 }
 
-// Nuevo método: acumula autos sin borrar los anteriores
 public void agregarAutosEnServicios(java.util.ArrayList<Auto> autos, String nombreCliente) {
     javax.swing.table.DefaultTableModel modelo =
         (javax.swing.table.DefaultTableModel) jTableAutosServicios.getModel();
-    // NO se llama setRowCount(0) — se acumulan todas las filas
     for (Auto a : autos) {
         modelo.addRow(new Object[]{
             nombreCliente,

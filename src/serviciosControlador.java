@@ -34,7 +34,6 @@ public class serviciosControlador {
         return;
     }
 
-    // ✅ Leer id_auto y tipo DIRECTAMENTE desde la tabla (no de listaAutos por índice)
     int idAuto = (int) vista.getTablaAutosServicios().getValueAt(fila, 1);
     String tipoAuto = (String) vista.getTablaAutosServicios().getValueAt(fila, 4);
 
