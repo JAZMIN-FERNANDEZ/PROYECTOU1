@@ -67,35 +67,93 @@ public class clienteControlador {
         limpiar();
     }
 
-    public void mostrarTicket(int filaSeleccionada) {
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(vista,
-                "Selecciona un cliente de la tabla primero.",
-                "Sin selección",
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        Cliente c = listaClientes.get(filaSeleccionada);
-
-        String ticket =
-            "=============================\n" +
-            "       TICKET CLIENTE        \n" +
-            "=============================\n" +
-            "ID:        " + c.getId_cliente() + "\n" +
-            "Nombre:    " + c.getNombre()     + "\n" +
-            "Apellido:  " + c.getApellido()   + "\n" +
-            "Teléfono:  " + c.getTelefono()   + "\n" +
-            "=============================";
-
-        javax.swing.JTextArea texto = new javax.swing.JTextArea(ticket);
-        texto.setFont(new java.awt.Font("Monospaced", 0, 14));
-        texto.setEditable(false);
-
-        JOptionPane.showMessageDialog(vista, texto,
-            "Ticket del Cliente",
-            JOptionPane.INFORMATION_MESSAGE);
+  public void mostrarTicket(int filaSeleccionada) {
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(vista,
+            "Selecciona un cliente de la tabla primero.",
+            "Sin selección",
+            JOptionPane.WARNING_MESSAGE);
+        return;
     }
+
+    Cliente c = listaClientes.get(filaSeleccionada);
+    java.time.LocalDate fecha = java.time.LocalDate.now();
+
+    // Obtener autos y servicios
+    java.util.ArrayList<Auto> autos = vista.getControladorAuto().getListaAutos();
+    java.util.HashMap<Integer, java.util.ArrayList<String>> serviciosPorAuto = 
+        vista.getControladorServicios().getServiciosPorAuto();
+
+    StringBuilder ticket = new StringBuilder();
+    ticket.append("=====================================\n");
+    ticket.append("        LAVAUTOS EL PANTERA          \n");
+    ticket.append("=====================================\n");
+    ticket.append("CLIENTE:   ").append(c.getNombre()).append(" ").append(c.getApellido()).append("\n");
+    ticket.append("TELÉFONO:  ").append(c.getTelefono()).append("\n");
+    ticket.append("FECHA:     ").append(fecha).append("\n");
+    ticket.append("-------------------------------------\n");
+
+    double total = 0;
+
+    for (Auto auto : autos) {
+        java.util.ArrayList<String> servicios = serviciosPorAuto.get(auto.getId_auto());
+        if (servicios == null || servicios.isEmpty()) continue;
+
+        ticket.append("\nVEHÍCULO:  ").append(auto.getModelo())
+              .append(" (").append(auto.getTipo()).append(") - ")
+              .append(auto.getColor()).append("\n");
+
+        for (String servicio : servicios) {
+            double precio = getPrecio(servicio, auto.getTipo());
+            ticket.append("  • ").append(servicio)
+                  .append(" ............. $").append(String.format("%.2f", precio)).append("\n");
+            total += precio;
+        }
+    }
+
+    ticket.append("\n=====================================\n");
+    ticket.append("  TOTAL:          $").append(String.format("%.2f", total)).append("\n");
+    ticket.append("=====================================\n");
+
+    javax.swing.JTextArea texto = new javax.swing.JTextArea(ticket.toString());
+    texto.setFont(new java.awt.Font("Monospaced", 0, 13));
+    texto.setEditable(false);
+
+    JOptionPane.showMessageDialog(vista, texto, "Ticket", JOptionPane.INFORMATION_MESSAGE);
+}
+
+private double getPrecio(String servicio, String tipo) {
+    switch (servicio) {
+        case "Lavado Exterior":
+            switch (tipo) {
+                case "Sedán":   return 150;
+                case "SUV":     return 200;
+                case "Pickup":  return 230;
+                case "Moto":    return 100;
+            }
+        case "Lavado Interior":
+            switch (tipo) {
+                case "Sedán":   return 120;
+                case "SUV":     return 180;
+                case "Pickup":  return 200;
+            }
+        case "Encerado":
+            switch (tipo) {
+                case "Sedán":   return 200;
+                case "SUV":     return 320;
+                case "Pickup":  return 380;
+                case "Moto":    return 70;
+            }
+        case "Pulido de Faros":
+            switch (tipo) {
+                case "Sedán":   return 100;
+                case "SUV":     return 100;
+                case "Pickup":  return 100;
+                case "Moto":    return 50;
+            }
+        default: return 0;
+    }
+}
 
     
     private void limpiar() {

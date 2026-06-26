@@ -80,7 +80,8 @@ public class autoControlador {
         }
 
         JOptionPane.showMessageDialog(vista, "Autos guardados: " + listaAutos.size());
-        vista.habilitarTab(2); // habilita Servicios
+        vista.habilitarTab(2); 
+        vista.getControladorServicios().cargarAutos(listaAutos, vista.getClienteActivo());
     }
 
     public ArrayList<Auto> getListaAutos() {

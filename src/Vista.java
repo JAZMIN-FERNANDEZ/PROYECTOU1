@@ -16,6 +16,7 @@ public class Vista extends javax.swing.JFrame {
      */
     private clienteControlador controlador;
     private autoControlador controladorAuto;
+    private serviciosControlador controladorServicios;
     
     
     public Vista() {
@@ -23,6 +24,8 @@ public class Vista extends javax.swing.JFrame {
         
         controlador = new clienteControlador(this);
         controladorAuto = new autoControlador(this);
+        controladorServicios = new serviciosControlador(this);
+        inicializarTablaServicios(); 
         
         ((javax.swing.table.DefaultTableModel) jTableClientesTicket.getModel()).setRowCount(0);
         jTableClientesTicket.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -64,6 +67,14 @@ public class Vista extends javax.swing.JFrame {
         jButtonAgregarAuto1 = new javax.swing.JButton();
         jPanelServicios = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableAutosServicios = new javax.swing.JTable();
+        jCheckBoxExterior = new javax.swing.JCheckBox();
+        jCheckBoxInterior = new javax.swing.JCheckBox();
+        jCheckBoxEncerado = new javax.swing.JCheckBox();
+        jCheckBoxPulido = new javax.swing.JCheckBox();
+        jButtonAsignarServicio = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
         jPanelTicket = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableClientesTicket = new javax.swing.JTable();
@@ -135,7 +146,7 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanelClienteLayout.createSequentialGroup()
                 .addGap(315, 315, 315)
                 .addComponent(JButton_RegistroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(327, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
         );
         jPanelClienteLayout.setVerticalGroup(
             jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +242,7 @@ public class Vista extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabelClienteActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanelVehiculoLayout.setVerticalGroup(
             jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,36 +265,103 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Vehiculo", jPanelVehiculo);
 
+        jTableAutosServicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Cliente", "ID auto", "Modelo", "Color", "Tipo"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jTableAutosServicios);
+
+        jCheckBoxExterior.setText("Lavado exterior");
+        jCheckBoxExterior.addActionListener(this::jCheckBoxExteriorActionPerformed);
+
+        jCheckBoxInterior.setText("Lavado interior");
+
+        jCheckBoxEncerado.setText("Encerado");
+
+        jCheckBoxPulido.setText("Pulido de faros");
+
+        jButtonAsignarServicio.setText("Asignar servicios");
+        jButtonAsignarServicio.addActionListener(this::jButtonAsignarServicioActionPerformed);
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Registro de servicios a vehiculos");
+        jLabel8.setToolTipText("");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jCheckBoxExterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxInterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxEncerado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBoxPulido, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAsignarServicio))
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(187, 187, 187))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 493, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(84, 84, 84)
+                        .addComponent(jCheckBoxExterior)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBoxInterior)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBoxEncerado)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBoxPulido)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonAsignarServicio)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelServiciosLayout = new javax.swing.GroupLayout(jPanelServicios);
         jPanelServicios.setLayout(jPanelServiciosLayout);
         jPanelServiciosLayout.setHorizontalGroup(
             jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
-            .addGroup(jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelServiciosLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelServiciosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelServiciosLayout.setVerticalGroup(
             jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 583, Short.MAX_VALUE)
-            .addGroup(jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelServiciosLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(jPanelServiciosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Servicios", jPanelServicios);
@@ -320,7 +398,7 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanelTicketLayout.createSequentialGroup()
                 .addGap(249, 249, 249)
                 .addComponent(jButtonMostrarTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addContainerGap(279, Short.MAX_VALUE))
         );
         jPanelTicketLayout.setVerticalGroup(
             jPanelTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,6 +480,15 @@ public class Vista extends javax.swing.JFrame {
             modelo.addRow(new Object[]{"", "", "", "", "", "", horaActual});
     }//GEN-LAST:event_jButtonAgregarAuto1ActionPerformed
 
+    private void jCheckBoxExteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExteriorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxExteriorActionPerformed
+
+    private void jButtonAsignarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAsignarServicioActionPerformed
+        // TODO add your handling code here:
+        controladorServicios.asignarServicio();
+    }//GEN-LAST:event_jButtonAsignarServicioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -432,8 +519,13 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTextField id_cliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAgregarAuto1;
+    private javax.swing.JButton jButtonAsignarServicio;
     private javax.swing.JButton jButtonEliminarAuto;
     private javax.swing.JButton jButtonMostrarTicket;
+    private javax.swing.JCheckBox jCheckBoxEncerado;
+    private javax.swing.JCheckBox jCheckBoxExterior;
+    private javax.swing.JCheckBox jCheckBoxInterior;
+    private javax.swing.JCheckBox jCheckBoxPulido;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -441,16 +533,19 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelClienteActivo;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCliente;
     private javax.swing.JPanel jPanelServicios;
     private javax.swing.JPanel jPanelTicket;
     private javax.swing.JPanel jPanelVehiculo;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableAutos;
+    private javax.swing.JTable jTableAutosServicios;
     private javax.swing.JTable jTableClientesTicket;
     private javax.swing.JTextField jTextField_Apellido;
     private javax.swing.JTextField jTextField_Nombre;
@@ -473,6 +568,10 @@ public javax.swing.JTextField getTelefono() {
     return jTextField_Telefono;
 }
 
+public serviciosControlador getControladorServicios() {
+    return controladorServicios;
+}
+
 public javax.swing.table.DefaultTableModel getModeloTabla() {
     return (javax.swing.table.DefaultTableModel) jTableClientesTicket.getModel();
 }
@@ -484,10 +583,28 @@ public void habilitarTab(int indice) {
 
 public void inicializarTablaAutos() {
     ((javax.swing.table.DefaultTableModel) jTableAutos.getModel()).setRowCount(0);
+     javax.swing.JComboBox<String> comboTipo = new javax.swing.JComboBox<>(
+        new String[]{"Sedán", "SUV", "Pickup", "Moto"}
+    );
+    jTableAutos.getColumnModel().getColumn(3)
+        .setCellEditor(new javax.swing.DefaultCellEditor(comboTipo));
 }
+
+public void inicializarTablaServicios() {
+    jTableAutosServicios.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            controladorServicios.cargarServiciosDelAuto();
+        }
+    });
+}
+
 public javax.swing.JTable getTablaAutos() {
     return jTableAutos;
     
+}
+
+public String getClienteActivo() {
+    return jLabelClienteActivo.getText();
 }
 
 public autoControlador getControladorAuto() {
@@ -497,5 +614,31 @@ public autoControlador getControladorAuto() {
 public void setClienteActivo(String nombre) {
     jLabelClienteActivo.setText(nombre);
 }
+
+public javax.swing.JTable getTablaAutosServicios() {
+    return jTableAutosServicios;
+}
+
+public void cargarAutosEnServicios(java.util.ArrayList<Auto> autos, String nombreCliente) {
+    javax.swing.table.DefaultTableModel modelo = 
+        (javax.swing.table.DefaultTableModel) jTableAutosServicios.getModel();
+    modelo.setRowCount(0);
+    for (Auto a : autos) {
+        modelo.addRow(new Object[]{
+            nombreCliente,
+            a.getId_auto(),
+            a.getModelo(),
+            a.getColor(),
+            a.getTipo()
+        });
+    }
+}
+
+public javax.swing.JCheckBox getCheckExterior()  { return jCheckBoxExterior; }
+public javax.swing.JCheckBox getCheckInterior()  { return jCheckBoxInterior; }
+public javax.swing.JCheckBox getCheckEncerado()  { return jCheckBoxEncerado; }
+public javax.swing.JCheckBox getCheckPulido()    { return jCheckBoxPulido;   }
+
+
 
 }
