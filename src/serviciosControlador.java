@@ -26,6 +26,28 @@ public class serviciosControlador {
     this.listaAutos = autos;
     vista.agregarAutosEnServicios(autos, nombreCliente);
 }
+    
+    public void cargarTodosLosAutos(ArrayList<Auto> todos) {
+    // Obtener los nombres de cada cliente por su id
+    ArrayList<Auto> autos = todos;
+    
+    javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel) vista.getTablaAutosServicios().getModel();
+    
+    modelo.setRowCount(0); // limpia para evitar duplicados
+
+    for (Auto a : autos) {
+        // Buscar el nombre del cliente en el controlador de autos
+        String nombreCliente = vista.getControladorAuto().getNombreCliente(a.getId_cliente());
+        modelo.addRow(new Object[]{
+            nombreCliente,
+            a.getId_auto(),
+            a.getModelo(),
+            a.getColor(),
+            a.getTipo()
+        });
+    }
+}
 
     public void asignarServicio() {
     int fila = vista.getTablaAutosServicios().getSelectedRow();
@@ -74,6 +96,7 @@ public class serviciosControlador {
         vista.getCheckInterior().setEnabled(true);
         return;
     }
+    
     
     String tipoAuto = (String) vista.getTablaAutosServicios().getValueAt(fila, 4);
     boolean esMoto = tipoAuto != null && tipoAuto.equalsIgnoreCase("Moto");
