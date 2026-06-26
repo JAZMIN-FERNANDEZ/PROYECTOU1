@@ -28,12 +28,24 @@ public class clienteControlador {
             JOptionPane.showMessageDialog(vista, "Ingrese el nombre");
             return;
         }
+        if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+")) {
+            JOptionPane.showMessageDialog(vista, "El nombre solo debe contener letras");
+            return;
+        }
         if (apellido.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese el apellido");
             return;
         }
+        if (!apellido.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+")) {
+            JOptionPane.showMessageDialog(vista, "El apellido solo debe contener letras");
+            return;
+        }
         if (telefono.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese el teléfono");
+            return;
+        }
+        if (!telefono.matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(vista, "El teléfono debe tener exactamente 10 dígitos");
             return;
         }
         if (!telefono.matches("\\d+")) {

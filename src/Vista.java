@@ -65,6 +65,7 @@ public class Vista extends javax.swing.JFrame {
         jTableAutos = new javax.swing.JTable();
         jButtonEliminarAuto = new javax.swing.JButton();
         jButtonAgregarAuto1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanelServicios = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -218,6 +219,9 @@ public class Vista extends javax.swing.JFrame {
         jButtonAgregarAuto1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 0), new java.awt.Color(51, 153, 0), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 51, 51)));
         jButtonAgregarAuto1.addActionListener(this::jButtonAgregarAuto1ActionPerformed);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
+
         javax.swing.GroupLayout jPanelVehiculoLayout = new javax.swing.GroupLayout(jPanelVehiculo);
         jPanelVehiculo.setLayout(jPanelVehiculoLayout);
         jPanelVehiculoLayout.setHorizontalGroup(
@@ -241,7 +245,9 @@ public class Vista extends javax.swing.JFrame {
                             .addGroup(jPanelVehiculoLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabelClienteActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabelClienteActivo, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))))))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanelVehiculoLayout.setVerticalGroup(
@@ -249,7 +255,9 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanelVehiculoLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addComponent(jLabel6)
-                .addGap(54, 54, 54)
+                .addGap(22, 22, 22)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelClienteActivo))
@@ -267,17 +275,17 @@ public class Vista extends javax.swing.JFrame {
 
         jTableAutosServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Cliente", "ID auto", "Modelo", "Color", "Tipo"
+                "Cliente", "ID auto", "Modelo", "Color", "Tipo", "Servicios"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -312,8 +320,8 @@ public class Vista extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jCheckBoxExterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -322,7 +330,7 @@ public class Vista extends javax.swing.JFrame {
                         .addComponent(jCheckBoxPulido, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButtonAsignarServicio)
                     .addComponent(jButtonPasarTicket))
-                .addGap(50, 50, 50))
+                .addGap(15, 15, 15))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -338,7 +346,7 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
+                        .addGap(65, 65, 65)
                         .addComponent(jCheckBoxExterior)
                         .addGap(18, 18, 18)
                         .addComponent(jCheckBoxInterior)
@@ -505,6 +513,10 @@ public class Vista extends javax.swing.JFrame {
         habilitarTab(3);
     }//GEN-LAST:event_jButtonPasarTicketActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -543,6 +555,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxExterior;
     private javax.swing.JCheckBox jCheckBoxInterior;
     private javax.swing.JCheckBox jCheckBoxPulido;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
