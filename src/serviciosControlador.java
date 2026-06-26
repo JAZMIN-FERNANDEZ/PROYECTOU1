@@ -8,6 +8,16 @@
  * @author Usuario
  */
 
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+
+/**
+ *
+ * @author Usuario
+ */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -44,10 +54,20 @@ public class serviciosControlador {
             a.getId_auto(),
             a.getModelo(),
             a.getColor(),
-            a.getTipo()
+            a.getTipo(),
+            obtenerTextoServicios(a.getId_auto())
         });
     }
 }
+
+    /** Devuelve los servicios asignados a un auto como texto para la tabla */
+    private String obtenerTextoServicios(int idAuto) {
+        ArrayList<String> servicios = serviciosPorAuto.get(idAuto);
+        if (servicios == null || servicios.isEmpty()) {
+            return "Sin asignar";
+        }
+        return String.join(", ", servicios);
+    }
 
     public void asignarServicio() {
     int fila = vista.getTablaAutosServicios().getSelectedRow();
@@ -77,6 +97,11 @@ public class serviciosControlador {
     }
 
     serviciosPorAuto.put(idAuto, servicios);
+
+    // Refleja de inmediato los servicios asignados en la columna "Servicios"
+    javax.swing.table.DefaultTableModel modelo =
+        (javax.swing.table.DefaultTableModel) vista.getTablaAutosServicios().getModel();
+    modelo.setValueAt(obtenerTextoServicios(idAuto), fila, 5);
 
     vista.getCheckExterior().setSelected(false);
     vista.getCheckInterior().setSelected(false);

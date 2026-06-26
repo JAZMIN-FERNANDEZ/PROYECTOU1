@@ -210,7 +210,15 @@ public class Vista extends javax.swing.JFrame {
             new String [] {
                 "ID Auto", "Cliente", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false, true, true, true, true, true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(jTableAutos);
 
         jButtonEliminarAuto.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
