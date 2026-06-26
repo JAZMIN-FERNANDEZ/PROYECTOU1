@@ -20,8 +20,10 @@ public class Vista extends javax.swing.JFrame {
     public Vista() {
         initComponents();
         
-    controlador = new clienteControlador(this);
-    configurarTablaServicios();
+        controlador = new clienteControlador(this);
+        // Limpia cualquier fila de ejemplo que haya quedado del diseñador
+        ((javax.swing.table.DefaultTableModel) jTableClientesTicket.getModel()).setRowCount(0);
+        jTableClientesTicket.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
     /**
@@ -34,7 +36,6 @@ public class Vista extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelServicios = new javax.swing.JPanel();
         jPanelCliente = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -64,6 +65,10 @@ public class Vista extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1_observaciones = new javax.swing.JTextArea();
+        jPanelServicios = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableClientesTicket = new javax.swing.JTable();
+        jButtonMostrarTicket = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -83,19 +88,6 @@ public class Vista extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        javax.swing.GroupLayout jPanelServiciosLayout = new javax.swing.GroupLayout(jPanelServicios);
-        jPanelServicios.setLayout(jPanelServiciosLayout);
-        jPanelServiciosLayout.setHorizontalGroup(
-            jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 750, Short.MAX_VALUE)
-        );
-        jPanelServiciosLayout.setVerticalGroup(
-            jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 538, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Servicios", jPanelServicios);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -315,6 +307,52 @@ public class Vista extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Vehiculo", jPanelVehiculo);
 
+        jTableClientesTicket.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Nombre", "Apellido", "Telefono"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(jTableClientesTicket);
+
+        jButtonMostrarTicket.setText("Mostrar ticket");
+        jButtonMostrarTicket.addActionListener(this::jButtonMostrarTicketActionPerformed);
+
+        javax.swing.GroupLayout jPanelServiciosLayout = new javax.swing.GroupLayout(jPanelServicios);
+        jPanelServicios.setLayout(jPanelServiciosLayout);
+        jPanelServiciosLayout.setHorizontalGroup(
+            jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane3)
+            .addGroup(jPanelServiciosLayout.createSequentialGroup()
+                .addGap(249, 249, 249)
+                .addComponent(jButtonMostrarTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(251, Short.MAX_VALUE))
+        );
+        jPanelServiciosLayout.setVerticalGroup(
+            jPanelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelServiciosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonMostrarTicket)
+                .addContainerGap(8, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Servicios", jPanelServicios);
+
         jLabel14.setText("Fecha");
 
         jLabel15.setText("Hora");
@@ -474,6 +512,12 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_FechaTActionPerformed
 
+    private void jButtonMostrarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMostrarTicketActionPerformed
+        // TODO add your handling code here:
+        int filaSeleccionada = jTableClientesTicket.getSelectedRow();
+        controlador.mostrarTicket(filaSeleccionada);
+    }//GEN-LAST:event_jButtonMostrarTicketActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,6 +553,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton generarT;
     private javax.swing.JTextField id_cliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonMostrarTicket;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -536,7 +581,9 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelVehiculo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableClientesTicket;
     private javax.swing.JTextArea jTextArea1_observaciones;
     private javax.swing.JTextField jTextField1_Idauto;
     private javax.swing.JTextField jTextField2_modelo;
@@ -566,43 +613,8 @@ public javax.swing.JTextField getTelefono() {
     return jTextField_Telefono;
 }
 
-// ── tabla para mostrar clientes ──
-    private javax.swing.JTable tablaClientes;
-    private javax.swing.table.DefaultTableModel modeloTabla;
-
-    private void configurarTablaServicios() {
-        modeloTabla = new javax.swing.table.DefaultTableModel(
-            new String[]{"ID", "Nombre", "Apellido", "Teléfono"}, 0
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        tablaClientes = new javax.swing.JTable(modeloTabla);
-        tablaClientes.setFont(new java.awt.Font("Segoe UI", 0, 13));
-        tablaClientes.setRowHeight(25);
-        tablaClientes.getTableHeader().setFont(new java.awt.Font("Segoe UI", 1, 13));
-
-        javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(tablaClientes);
-
-        javax.swing.JButton btnTicket = new javax.swing.JButton("Mostrar Ticket");
-        btnTicket.setFont(new java.awt.Font("Segoe UI", 0, 14));
-        btnTicket.addActionListener(evt -> controlador.mostrarTicket(tablaClientes.getSelectedRow()));
-
-        javax.swing.JLabel titulo = new javax.swing.JLabel("Clientes Registrados");
-        titulo.setFont(new java.awt.Font("Segoe UI", 1, 18));
-        titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-
-        jPanelServicios.setLayout(new java.awt.BorderLayout(0, 10));
-        jPanelServicios.add(titulo, java.awt.BorderLayout.NORTH);
-        jPanelServicios.add(scroll, java.awt.BorderLayout.CENTER);
-        jPanelServicios.add(btnTicket, java.awt.BorderLayout.SOUTH);
-    }
-
-    public javax.swing.table.DefaultTableModel getModeloTabla() {
-        return modeloTabla;
+public javax.swing.table.DefaultTableModel getModeloTabla() {
+    return (javax.swing.table.DefaultTableModel) jTableClientesTicket.getModel();
 }
 
 }
