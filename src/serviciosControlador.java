@@ -62,7 +62,6 @@ public class serviciosControlador {
     vista.getCheckPulido().setSelected(false);
 
     JOptionPane.showMessageDialog(vista, "Servicios asignados al auto " + idAuto + ": " + servicios);
-    vista.habilitarTab(3);
 }
 
     public HashMap<Integer, ArrayList<String>> getServiciosPorAuto() {

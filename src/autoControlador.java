@@ -31,6 +31,10 @@ public class autoControlador {
         vista.setClienteActivo(nombreCompleto);
     }
 
+    public int getSiguienteIdAuto() {
+        return contadorAuto++;
+    }
+
     public void guardarAutos() {
         DefaultTableModel modelo = (DefaultTableModel) vista.getTablaAutos().getModel();
         int filas = modelo.getRowCount();

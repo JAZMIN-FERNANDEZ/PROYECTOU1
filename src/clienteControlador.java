@@ -9,6 +9,13 @@ public class clienteControlador {
     public clienteControlador(Vista vista) {
         this.vista = vista;
         listaClientes = new ArrayList<>();
+        generarIdCliente();
+    }
+
+    public void generarIdCliente() {
+        String idFormateado = String.format("%04d", contadorCliente);
+        vista.getIdCliente().setText(idFormateado);
+        vista.getIdCliente().setEditable(false);
     }
 
     public void JButton_RegistroCliente() {
@@ -17,10 +24,6 @@ public class clienteControlador {
         String apellido = vista.getApellido().getText().trim();
         String telefono = vista.getTelefono().getText().trim();
 
-        if (id.isEmpty()) {
-            JOptionPane.showMessageDialog(vista, "Ingrese el ID del cliente");
-            return;
-        }
         if (nombre.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese el nombre");
             return;
@@ -31,10 +34,6 @@ public class clienteControlador {
         }
         if (telefono.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Ingrese el teléfono");
-            return;
-        }
-        if (!id.matches("\\d+")) {
-            JOptionPane.showMessageDialog(vista, "El ID solo debe contener números");
             return;
         }
         if (!telefono.matches("\\d+")) {
@@ -62,10 +61,12 @@ public class clienteControlador {
         vista.getModeloTabla().addRow(new Object[]{idCliente, nombre, apellido, telefono});
 
         JOptionPane.showMessageDialog(vista, "Cliente registrado correctamente. Total: " + listaClientes.size());
+        contadorCliente++;
         vista.habilitarTab(1);
         vista.getControladorAuto().setClienteActivo(idCliente, nombre + " " + apellido);
 
         limpiar();
+        generarIdCliente();
     }
 
   public void mostrarTicket(int filaSeleccionada) {

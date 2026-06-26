@@ -75,6 +75,7 @@ public class Vista extends javax.swing.JFrame {
         jCheckBoxPulido = new javax.swing.JCheckBox();
         jButtonAsignarServicio = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        jButtonPasarTicket = new javax.swing.JButton();
         jPanelTicket = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableClientesTicket = new javax.swing.JTable();
@@ -240,8 +241,7 @@ public class Vista extends javax.swing.JFrame {
                             .addGroup(jPanelVehiculoLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabelClienteActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))))
+                                .addComponent(jLabelClienteActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanelVehiculoLayout.setVerticalGroup(
@@ -250,8 +250,8 @@ public class Vista extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jLabel6)
                 .addGap(54, 54, 54)
-                .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelClienteActivo))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
@@ -303,6 +303,9 @@ public class Vista extends javax.swing.JFrame {
         jLabel8.setText("Registro de servicios a vehiculos");
         jLabel8.setToolTipText("");
 
+        jButtonPasarTicket.setText("Ir a Ticket");
+        jButtonPasarTicket.addActionListener(this::jButtonPasarTicketActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -317,7 +320,8 @@ public class Vista extends javax.swing.JFrame {
                         .addComponent(jCheckBoxInterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBoxEncerado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCheckBoxPulido, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonAsignarServicio))
+                    .addComponent(jButtonAsignarServicio)
+                    .addComponent(jButtonPasarTicket))
                 .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -343,7 +347,9 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jCheckBoxPulido)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonAsignarServicio)))
+                        .addComponent(jButtonAsignarServicio)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonPasarTicket)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -477,7 +483,7 @@ public class Vista extends javax.swing.JFrame {
                             .truncatedTo(java.time.temporal.ChronoUnit.MINUTES)
                             .toString();
     
-            modelo.addRow(new Object[]{"", "", "", "", "", "", horaActual});
+            modelo.addRow(new Object[]{String.format("%04d", controladorAuto.getSiguienteIdAuto()), "", "", "", "", "", horaActual});
     }//GEN-LAST:event_jButtonAgregarAuto1ActionPerformed
 
     private void jCheckBoxExteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxExteriorActionPerformed
@@ -488,6 +494,11 @@ public class Vista extends javax.swing.JFrame {
         // TODO add your handling code here:
         controladorServicios.asignarServicio();
     }//GEN-LAST:event_jButtonAsignarServicioActionPerformed
+
+    private void jButtonPasarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPasarTicketActionPerformed
+        // TODO add your handling code here:
+        habilitarTab(3);
+    }//GEN-LAST:event_jButtonPasarTicketActionPerformed
 
     /**
      * @param args the command line arguments
@@ -522,6 +533,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAsignarServicio;
     private javax.swing.JButton jButtonEliminarAuto;
     private javax.swing.JButton jButtonMostrarTicket;
+    private javax.swing.JButton jButtonPasarTicket;
     private javax.swing.JCheckBox jCheckBoxEncerado;
     private javax.swing.JCheckBox jCheckBoxExterior;
     private javax.swing.JCheckBox jCheckBoxInterior;
@@ -582,8 +594,17 @@ public void habilitarTab(int indice) {
 }
 
 public void inicializarTablaAutos() {
-    ((javax.swing.table.DefaultTableModel) jTableAutos.getModel()).setRowCount(0);
-     javax.swing.JComboBox<String> comboTipo = new javax.swing.JComboBox<>(
+    javax.swing.table.DefaultTableModel modeloAutos = new javax.swing.table.DefaultTableModel(
+        new Object[][]{},
+        new String[]{"ID Auto", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"}
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return column != 0; // ID Auto no editable
+        }
+    };
+    jTableAutos.setModel(modeloAutos);
+    javax.swing.JComboBox<String> comboTipo = new javax.swing.JComboBox<>(
         new String[]{"Sedán", "SUV", "Pickup", "Moto"}
     );
     jTableAutos.getColumnModel().getColumn(3)
