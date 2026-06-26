@@ -226,7 +226,7 @@ public class FrmGestionServicios extends javax.swing.JFrame {
 
         jCalendar1_fechaServicio.setBorder(javax.swing.BorderFactory.createTitledBorder("Fecha del servicio"));
 
-        jTextField1.setText("8:30");
+        jTextField1.setText("8:15");
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
         jTextField2.setText("17:00");
@@ -395,7 +395,7 @@ public class FrmGestionServicios extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
