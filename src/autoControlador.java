@@ -23,6 +23,10 @@ public class autoControlador {
     private int idClienteActivo;
     private String nombreClienteActivo;
     private int contadorAuto = 1;
+    
+    private ArrayList<Integer> idsClientes      = new ArrayList<>();
+    private ArrayList<String>  nombresClientes  = new ArrayList<>();
+    
 
     public autoControlador(Vista vista) {
         this.vista = vista;
@@ -31,12 +35,27 @@ public class autoControlador {
         vista.inicializarTablaAutos();
     }
 
-    public void setClienteActivo(int idCliente, String nombreCompleto) {
-    this.idClienteActivo = idCliente;
-    this.nombreClienteActivo = nombreCompleto;
-    vista.setClienteActivo(nombreCompleto);
-    
-}
+     public void setClienteActivo(int idCliente, String nombreCompleto) {
+        idsClientes.add(idCliente);
+        nombresClientes.add(nombreCompleto);
+
+        // Puebla el combo y lo deja seleccionado en el recién registrado
+        vista.agregarClienteAlCombo(idCliente, nombreCompleto);
+
+        this.idClienteActivo     = idCliente;
+        this.nombreClienteActivo = nombreCompleto;
+    }
+     
+    public void onComboClienteChanged() {
+        int idx = vista.getComboClientes().getSelectedIndex();
+        if (idx < 0 || idx >= idsClientes.size()) return;
+
+        idClienteActivo      = idsClientes.get(idx);
+        nombreClienteActivo  = nombresClientes.get(idx);
+
+        // Actualiza el label debajo del combo
+        vista.setClienteActivo(nombreClienteActivo);
+    }
 
     public int getSiguienteIdAuto() {
         return contadorAuto++;
@@ -56,7 +75,10 @@ public class autoControlador {
         autosClienteActivo = new ArrayList<>();
 
         for (int i = 0; i < filas; i++) {
-            // Columnas: 0=ID Auto, 1=Cliente(display), 2=Modelo, 3=Color, 4=Tipo, 5=Obs, 6=Cita, 7=Hora
+            // Solo procesa filas que pertenecen al cliente activo
+            String clienteEnFila = String.valueOf(modelo.getValueAt(i, 1)).trim();
+            if (!clienteEnFila.equals(nombreClienteActivo)) continue;
+
             String idStr       = String.valueOf(modelo.getValueAt(i, 0)).trim();
             String modelo_auto = String.valueOf(modelo.getValueAt(i, 2)).trim();
             String color       = String.valueOf(modelo.getValueAt(i, 3)).trim();
@@ -96,8 +118,9 @@ public class autoControlador {
             todosLosAutos.add(auto);
         }
 
-        JOptionPane.showMessageDialog(vista, "Autos guardados: " + autosClienteActivo.size());
-        vista.habilitarTab(2);
+        JOptionPane.showMessageDialog(vista,
+            "Autos guardados para \"" + nombreClienteActivo + "\": " + autosClienteActivo.size());
+        
         vista.getControladorServicios().cargarAutos(autosClienteActivo, nombreClienteActivo);
     }
 

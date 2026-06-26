@@ -33,6 +33,9 @@ public class Vista extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(1, false); // Vehículo
         jTabbedPane1.setEnabledAt(2, false); // Servicios
         jTabbedPane1.setEnabledAt(3, false); // Ticket
+        
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>());
+
     }
 
     /**
@@ -66,6 +69,7 @@ public class Vista extends javax.swing.JFrame {
         jButtonEliminarAuto = new javax.swing.JButton();
         jButtonAgregarAuto1 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         jPanelServicios = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -222,6 +226,11 @@ public class Vista extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setText("IR A SERVICIOS");
+        jButton2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(0, 51, 0), new java.awt.Color(51, 153, 0), new java.awt.Color(51, 51, 51), new java.awt.Color(0, 51, 51)));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+
         javax.swing.GroupLayout jPanelVehiculoLayout = new javax.swing.GroupLayout(jPanelVehiculo);
         jPanelVehiculo.setLayout(jPanelVehiculoLayout);
         jPanelVehiculoLayout.setHorizontalGroup(
@@ -237,7 +246,9 @@ public class Vista extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonEliminarAuto)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2))
                     .addGroup(jPanelVehiculoLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,7 +278,8 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButtonEliminarAuto)
-                    .addComponent(jButtonAgregarAuto1))
+                    .addComponent(jButtonAgregarAuto1)
+                    .addComponent(jButton2))
                 .addGap(15, 15, 15))
         );
 
@@ -515,7 +527,13 @@ public class Vista extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        controladorAuto.onComboClienteChanged();
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        habilitarTab(2);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -546,6 +564,7 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JButton JButton_RegistroCliente;
     private javax.swing.JTextField id_cliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAgregarAuto1;
     private javax.swing.JButton jButtonAsignarServicio;
     private javax.swing.JButton jButtonEliminarAuto;
@@ -686,6 +705,17 @@ public void agregarAutosEnServicios(java.util.ArrayList<Auto> autos, String nomb
             a.getTipo()
         });
     }
+}
+
+public void agregarClienteAlCombo(int idCliente, String nombreCompleto) {
+    String item = String.format("%04d – %s", idCliente, nombreCompleto);
+    jComboBox1.addItem(item);
+    jComboBox1.setSelectedItem(item);
+    jLabelClienteActivo.setText(nombreCompleto);
+}
+
+public javax.swing.JComboBox<String> getComboClientes() {
+    return jComboBox1;
 }
 
 public javax.swing.JCheckBox getCheckExterior()  { return jCheckBoxExterior; }
