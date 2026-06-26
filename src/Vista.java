@@ -5,7 +5,7 @@
 
 /**
  *
- * @author Usuario
+ * @author jazmin
  */
 public class Vista extends javax.swing.JFrame {
     
@@ -14,9 +14,13 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form Vista
      */
+    private clienteControlador controlador;
+    
+    
     public Vista() {
         initComponents();
-    }
+        
+    controlador = new clienteControlador(this);    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,7 +36,7 @@ public class Vista extends javax.swing.JFrame {
         jPanelCliente = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField_IdCliente = new javax.swing.JTextField();
+        id_cliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextField_Nombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -82,8 +86,8 @@ public class Vista extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Id. Cliente");
 
-        jTextField_IdCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField_IdCliente.addActionListener(this::jTextField_IdClienteActionPerformed);
+        id_cliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        id_cliente.addActionListener(this::id_clienteActionPerformed);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Nombre");
@@ -105,6 +109,7 @@ public class Vista extends javax.swing.JFrame {
 
         JButton_RegistroCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JButton_RegistroCliente.setText("Registrar");
+        JButton_RegistroCliente.addActionListener(this::JButton_RegistroClienteActionPerformed);
 
         javax.swing.GroupLayout jPanelClienteLayout = new javax.swing.GroupLayout(jPanelCliente);
         jPanelCliente.setLayout(jPanelClienteLayout);
@@ -131,7 +136,7 @@ public class Vista extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelClienteLayout.createSequentialGroup()
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(30, 30, 30)
-                                    .addComponent(jTextField_IdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(id_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanelClienteLayout.createSequentialGroup()
@@ -147,7 +152,7 @@ public class Vista extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField_IdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(id_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -302,9 +307,9 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField_IdClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_IdClienteActionPerformed
+    private void id_clienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_clienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField_IdClienteActionPerformed
+    }//GEN-LAST:event_id_clienteActionPerformed
 
     private void jTextField_NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_NombreActionPerformed
         // TODO add your handling code here:
@@ -317,6 +322,11 @@ public class Vista extends javax.swing.JFrame {
     private void jTextField_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_TelefonoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_TelefonoActionPerformed
+
+    private void JButton_RegistroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButton_RegistroClienteActionPerformed
+        // TODO add your handling code here:
+        controlador.JButton_RegistroCliente();
+    }//GEN-LAST:event_JButton_RegistroClienteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -345,6 +355,7 @@ public class Vista extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JButton_RegistroCliente;
+    private javax.swing.JTextField id_cliente;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -372,8 +383,23 @@ public class Vista extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6_cita;
     private javax.swing.JTextField jTextField7_hora;
     private javax.swing.JTextField jTextField_Apellido;
-    private javax.swing.JTextField jTextField_IdCliente;
     private javax.swing.JTextField jTextField_Nombre;
     private javax.swing.JTextField jTextField_Telefono;
     // End of variables declaration//GEN-END:variables
+
+public javax.swing.JTextField getIdCliente() {
+    return id_cliente;
+}
+
+public javax.swing.JTextField getNombre() {
+    return jTextField_Nombre;
+}
+
+public javax.swing.JTextField getApellido() {
+    return jTextField_Apellido;
+}
+
+public javax.swing.JTextField getTelefono() {
+    return jTextField_Telefono;
+}
 }
