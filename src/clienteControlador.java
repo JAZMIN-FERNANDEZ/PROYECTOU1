@@ -61,6 +61,9 @@ public class clienteControlador {
         vista.getModeloTabla().addRow(new Object[]{idCliente, nombre, apellido, telefono});
 
         JOptionPane.showMessageDialog(vista, "Cliente registrado correctamente. Total: " + listaClientes.size());
+        vista.habilitarTab(1);
+        vista.getControladorAuto().setClienteActivo(idCliente, nombre + " " + apellido);
+
         limpiar();
     }
 
@@ -94,6 +97,7 @@ public class clienteControlador {
             JOptionPane.INFORMATION_MESSAGE);
     }
 
+    
     private void limpiar() {
         vista.getIdCliente().setText("");
         vista.getNombre().setText("");
