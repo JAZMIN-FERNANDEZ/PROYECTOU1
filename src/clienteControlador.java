@@ -3,6 +3,7 @@ import javax.swing.JOptionPane;
 
 public class clienteControlador {
     private Vista vista;
+    private int contadorCliente = 1;
     private ArrayList<Cliente> listaClientes;
 
     public clienteControlador(Vista vista) {

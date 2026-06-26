@@ -18,6 +18,7 @@ public class autoControlador {
     private Vista vista;
     private ArrayList<Auto> listaAutos;
     private int idClienteActivo;
+    private int contadorAuto = 1;
 
     public autoControlador(Vista vista) {
         this.vista = vista;
