@@ -12,7 +12,7 @@ public class Vista extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Vista.class.getName());
 
     /**
-     * Creates new form Vista
+     * Creates new form VistaS
      */
     private clienteControlador controlador;
     private autoControlador controladorAuto;
