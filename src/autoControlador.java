@@ -9,10 +9,12 @@
  */
 
 import java.time.LocalTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.time.format.DateTimeFormatter;
 
 public class autoControlador {
     private Vista vista;
@@ -83,6 +85,7 @@ public void guardarAutos() {
         String obs         = String.valueOf(modelo.getValueAt(i, 5)).trim();
         String citaStr     = String.valueOf(modelo.getValueAt(i, 6)).trim().toLowerCase();
         String horaStr     = String.valueOf(modelo.getValueAt(i, 7)).trim();
+        String fechaStr    = String.valueOf(modelo.getValueAt(i, 8)).trim();
 
         if (idStr.isEmpty() || modelo_auto.isEmpty() || color.isEmpty() || tipo.isEmpty()) {
             JOptionPane.showMessageDialog(vista, "Fila " + (i+1) + ": completa ID, Modelo, Color y Tipo.");
@@ -121,11 +124,22 @@ public void guardarAutos() {
             }
         }
 
+       
+        
+        LocalDate fecha = LocalDate.now();
+    if (!fechaStr.isEmpty() && !fechaStr.equals("null")) {
+    try {
+        fecha = LocalDate.parse(fechaStr, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(vista, "Fila " + (i+1) + ": fecha inválida, usa dd/MM/yyyy");
+        return;
+    }
+}
         Auto auto = new Auto(idAuto, modelo_auto, color, tipo, obs, cita, hora);
         auto.setId_cliente(idCliente);
+        auto.setFecha(fecha);
         todosLosAutos.add(auto);
-
-        // También acumula los del cliente activo para pasarlos a servicios
+        
         if (idCliente == idClienteActivo) {
             autosClienteActivo.add(auto);
         }

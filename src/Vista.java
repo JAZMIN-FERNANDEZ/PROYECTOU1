@@ -352,7 +352,7 @@ public class Vista extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAsignarServicio)
                             .addComponent(jButtonPasarTicket))))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelServiciosLayout = new javax.swing.GroupLayout(jPanelServicios);
@@ -493,12 +493,14 @@ public class Vista extends javax.swing.JFrame {
             String horaActual = java.time.LocalTime.now()
                             .truncatedTo(java.time.temporal.ChronoUnit.MINUTES)
                             .toString();
+            String fechaActual = java.time.LocalDate.now()
+                    .format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     
-            // Columnas: ID Auto | Cliente | Modelo | Color | Tipo | Observaciones | Cita | Hora
+            // 
             modelo.addRow(new Object[]{
                 String.format("%04d", controladorAuto.getSiguienteIdAuto()),
                 jLabelClienteActivo.getText(),
-                "", "", "", "", "", horaActual
+                "", "", "", "", "", horaActual, fechaActual
             });
     }//GEN-LAST:event_jButtonAgregarAuto1ActionPerformed
 
@@ -625,7 +627,7 @@ public void habilitarTab(int indice) {
 public void inicializarTablaAutos() {
     javax.swing.table.DefaultTableModel modeloAutos = new javax.swing.table.DefaultTableModel(
         new Object[][]{},
-        new String[]{"ID Auto", "Cliente", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora"}
+        new String[]{"ID Auto", "Cliente", "Modelo", "Color", "Tipo", "Observaciones", "Cita", "Hora","Fecha"}
     ) {
         @Override
         public boolean isCellEditable(int row, int column) {

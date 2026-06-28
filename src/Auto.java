@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+
+
 public class Auto {
 
     private int id_auto;
@@ -8,6 +11,7 @@ public class Auto {
     private String observaciones;
     private boolean cita;
     private java.time.LocalTime hora;
+     private LocalDate fecha;
 
     public Auto() {
     }
@@ -81,7 +85,13 @@ public class Auto {
     public void setHora(java.time.LocalTime hora) {
         this.hora = hora;
     }
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
     @Override
     public String toString() {
         return "Auto{" +
