@@ -54,7 +54,7 @@ public class Vista extends javax.swing.JFrame {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelCliente = new javax.swing.JPanel() { private final java.awt.Image fondo = new javax.swing.ImageIcon(getClass().getResource("/imagenes/imagen1.png")).getImage(); protected void paintComponent(java.awt.Graphics g) { super.paintComponent(g); g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this); } };
+        jPanelCliente = new javax.swing.JPanel() { private final java.awt.Image fondo = new javax.swing.ImageIcon(getClass().getResource("/imagenes/imagen1.jpg")).getImage(); protected void paintComponent(java.awt.Graphics g) { super.paintComponent(g); g.drawImage(fondo, 0, 0, getWidth(), getHeight(), this); } };
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         id_cliente = new javax.swing.JTextField();
@@ -338,7 +338,6 @@ public class Vista extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
