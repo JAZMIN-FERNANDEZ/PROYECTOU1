@@ -40,6 +40,8 @@ public class Vista extends javax.swing.JFrame {
         
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>());
 
+        
+    
     }
   
     /**
@@ -93,99 +95,55 @@ public class Vista extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanelCliente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Registro de los datos del cliente");
         jLabel1.setToolTipText("");
+        jPanelCliente.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 81, 350, -1));
 
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Id. Cliente");
+        jPanelCliente.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 148, 120, -1));
 
         id_cliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         id_cliente.addActionListener(this::id_clienteActionPerformed);
+        jPanelCliente.add(id_cliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 144, 200, -1));
 
         jLabel3.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombre");
+        jPanelCliente.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 193, 120, -1));
 
         jTextField_Nombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField_Nombre.addActionListener(this::jTextField_NombreActionPerformed);
+        jPanelCliente.add(jTextField_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 189, 200, -1));
 
         jLabel4.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Apellido");
+        jPanelCliente.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 238, 120, -1));
 
         jTextField_Apellido.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField_Apellido.addActionListener(this::jTextField_ApellidoActionPerformed);
+        jPanelCliente.add(jTextField_Apellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 234, 200, -1));
 
         jLabel5.setFont(new java.awt.Font("Showcard Gothic", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Telefono");
+        jPanelCliente.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(202, 283, 120, -1));
 
         jTextField_Telefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField_Telefono.addActionListener(this::jTextField_TelefonoActionPerformed);
+        jPanelCliente.add(jTextField_Telefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 279, 200, -1));
 
         JButton_RegistroCliente.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         JButton_RegistroCliente.setText("Registrar");
         JButton_RegistroCliente.addActionListener(this::JButton_RegistroClienteActionPerformed);
-
-        javax.swing.GroupLayout jPanelClienteLayout = new javax.swing.GroupLayout(jPanelCliente);
-        jPanelCliente.setLayout(jPanelClienteLayout);
-        jPanelClienteLayout.setHorizontalGroup(
-            jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelClienteLayout.createSequentialGroup()
-                .addContainerGap(202, Short.MAX_VALUE)
-                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanelClienteLayout.createSequentialGroup()
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addComponent(jTextField_Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelClienteLayout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jTextField_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelClienteLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(id_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanelClienteLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JButton_RegistroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(228, Short.MAX_VALUE))
-        );
-        jPanelClienteLayout.setVerticalGroup(
-            jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelClienteLayout.createSequentialGroup()
-                .addContainerGap(81, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(id_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField_Apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(54, 54, 54)
-                .addComponent(JButton_RegistroCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(233, Short.MAX_VALUE))
-        );
+        jPanelCliente.add(JButton_RegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(352, 360, 110, 40));
 
         jTabbedPane1.addTab("Cliente", jPanelCliente);
 
@@ -289,7 +247,7 @@ public class Vista extends javax.swing.JFrame {
                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelClienteActivo))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE)
                 .addGap(9, 9, 9)
                 .addGroup(jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -322,13 +280,17 @@ public class Vista extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableAutosServicios);
 
+        jCheckBoxExterior.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxExterior.setText("Lavado exterior");
         jCheckBoxExterior.addActionListener(this::jCheckBoxExteriorActionPerformed);
 
+        jCheckBoxInterior.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxInterior.setText("Lavado interior");
 
+        jCheckBoxEncerado.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxEncerado.setText("Encerado");
 
+        jCheckBoxPulido.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxPulido.setText("Pulido de faros");
 
         jButtonAsignarServicio.setText("Asignar servicios");
@@ -349,12 +311,6 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(202, 202, 202)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(118, 118, 118)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jCheckBoxInterior, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -366,16 +322,23 @@ public class Vista extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAsignarServicio)
                         .addGap(18, 18, 18)
-                        .addComponent(jButtonPasarTicket)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jButtonPasarTicket))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(201, 201, 201)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel8)
-                .addGap(26, 26, 26)
+                .addGap(52, 52, 52)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -386,11 +349,11 @@ public class Vista extends javax.swing.JFrame {
                             .addComponent(jCheckBoxInterior)
                             .addComponent(jCheckBoxPulido)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonAsignarServicio)
                             .addComponent(jButtonPasarTicket))))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(120, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelServiciosLayout = new javax.swing.GroupLayout(jPanelServicios);
@@ -436,8 +399,6 @@ public class Vista extends javax.swing.JFrame {
         jButtonMostrarTicket.setText("Mostrar ticket");
         jButtonMostrarTicket.addActionListener(this::jButtonMostrarTicketActionPerformed);
 
-        jLabel9.setText("jLabel9");
-
         javax.swing.GroupLayout jPanelTicketLayout = new javax.swing.GroupLayout(jPanelTicket);
         jPanelTicket.setLayout(jPanelTicketLayout);
         jPanelTicketLayout.setHorizontalGroup(
@@ -459,7 +420,7 @@ public class Vista extends javax.swing.JFrame {
                 .addGroup(jPanelTicketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelTicketLayout.createSequentialGroup()
                         .addComponent(jButtonMostrarTicket)
-                        .addGap(0, 85, Short.MAX_VALUE))
+                        .addGap(0, 73, Short.MAX_VALUE))
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -474,7 +435,10 @@ public class Vista extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
 
         pack();
