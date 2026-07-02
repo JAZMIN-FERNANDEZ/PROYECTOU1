@@ -14,9 +14,7 @@ public class Vista extends javax.swing.JFrame {
     /**
      * Creates new form VistaS
      */
-    private clienteControlador controlador;
-    private autoControlador controladorAuto;
-    private serviciosControlador controladorServicios;
+    private Controlador controlador;
     
     
     public Vista() {
@@ -25,10 +23,7 @@ public class Vista extends javax.swing.JFrame {
         
         setLocationRelativeTo(null);
         setResizable(false);         
-        controlador = new clienteControlador(this);      
-        controlador = new clienteControlador(this);
-        controladorAuto = new autoControlador(this);
-        controladorServicios = new serviciosControlador(this);
+        controlador = new Controlador(this);
         inicializarTablaServicios(); 
         
         ((javax.swing.table.DefaultTableModel) jTableClientesTicket.getModel()).setRowCount(0);
@@ -472,7 +467,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        controladorAuto.guardarAutos();
+        controlador.guardarAutos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonEliminarAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarAutoActionPerformed
@@ -498,7 +493,7 @@ public class Vista extends javax.swing.JFrame {
     
             // 
             modelo.addRow(new Object[]{
-                String.format("%04d", controladorAuto.getSiguienteIdAuto()),
+                String.format("%04d", controlador.getSiguienteIdAuto()),
                 jLabelClienteActivo.getText(),
                 "", "", "", "", "", horaActual, fechaActual
             });
@@ -510,7 +505,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void jButtonAsignarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAsignarServicioActionPerformed
         // TODO add your handling code here:
-        controladorServicios.asignarServicio();
+        controlador.asignarServicio();
     }//GEN-LAST:event_jButtonAsignarServicioActionPerformed
 
     private void jButtonPasarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPasarTicketActionPerformed
@@ -520,7 +515,7 @@ public class Vista extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        controladorAuto.onComboClienteChanged();
+        controlador.onComboClienteChanged();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -611,8 +606,8 @@ public javax.swing.JTextField getTelefono() {
     return jTextField_Telefono;
 }
 
-public serviciosControlador getControladorServicios() {
-    return controladorServicios;
+public Controlador getControlador() {
+    return controlador;
 }
 
 public javax.swing.table.DefaultTableModel getModeloTabla() {
@@ -646,10 +641,12 @@ public void inicializarTablaAutos() {
 public void inicializarTablaServicios() {
     jTableAutosServicios.getSelectionModel().addListSelectionListener(e -> {
         if (!e.getValueIsAdjusting()) {
-            controladorServicios.cargarServiciosDelAuto();
+            controlador.cargarServiciosDelAuto();
         }
     });
 }
+
+//sinko peso
 
 public javax.swing.JTable getTablaAutos() {
     return jTableAutos;
@@ -660,9 +657,7 @@ public String getClienteActivo() {
     return jLabelClienteActivo.getText();
 }
 
-public autoControlador getControladorAuto() {
-    return controladorAuto;
-}
+
 
 public void setClienteActivo(String nombre) {
     jLabelClienteActivo.setText(nombre);
