@@ -15,7 +15,14 @@ public class Vista extends javax.swing.JFrame {
      * Creates new form VistaS
      */
     private Controlador controlador;
-    
+     // ---- Componentes propios del tab "Monitoreo" ----
+    private javax.swing.JTable tablaMonitoreo;
+    private javax.swing.JButton btnRegistrarEntrada;
+    private javax.swing.JButton btnRegistrarSalida;
+    private TarjetaClientePanel panelTarjeta;
+    private IndicadorEstadoPanel panelEstado;
+    private ContadorServicioPanel panelContador;
+    private BarraProgresoPanel panelProgreso;
     
     public Vista() {
         initComponents();
@@ -34,8 +41,7 @@ public class Vista extends javax.swing.JFrame {
         jTabbedPane1.setEnabledAt(3, false); // Ticket
         
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>());
-
-        
+        construirTabMonitoreo();
     
     }
   
@@ -706,7 +712,193 @@ public void agregarClienteAlCombo(int idCliente, String nombreCompleto) {
 public javax.swing.JComboBox<String> getComboClientes() {
     return jComboBox1;
 }
+private void construirTabMonitoreo() {
+    javax.swing.table.DefaultTableModel modeloMonitor = new javax.swing.table.DefaultTableModel(
+            new Object[][]{},
+            new String[]{"ID", "Cliente", "Modelo", "Tipo", "Estado", "Duración"}
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+    tablaMonitoreo = new javax.swing.JTable(modeloMonitor);
+    tablaMonitoreo.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+    tablaMonitoreo.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            actualizarPanelDetalle();
+        }
+    });
+    javax.swing.JScrollPane scroll = new javax.swing.JScrollPane(tablaMonitoreo);
 
+    btnRegistrarEntrada = new javax.swing.JButton("Registrar entrada");
+    btnRegistrarEntrada.addActionListener(e -> {
+        int fila = tablaMonitoreo.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un vehículo de la lista.");
+            return;
+        }
+        int idAuto = (int) tablaMonitoreo.getValueAt(fila, 0);
+        controlador.registrarEntradaAuto(idAuto);
+    });
+
+    btnRegistrarSalida = new javax.swing.JButton("Registrar salida");
+    btnRegistrarSalida.addActionListener(e -> {
+        int fila = tablaMonitoreo.getSelectedRow();
+        if (fila == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Selecciona un vehículo de la lista.");
+            return;
+        }
+        int idAuto = (int) tablaMonitoreo.getValueAt(fila, 0);
+        controlador.registrarSalidaAuto(idAuto);
+    });
+
+    javax.swing.JPanel panelBotones = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+    panelBotones.add(btnRegistrarEntrada);
+    panelBotones.add(btnRegistrarSalida);
+
+    javax.swing.JPanel panelIzquierdo = new javax.swing.JPanel(new java.awt.BorderLayout(8, 8));
+    panelIzquierdo.setBorder(javax.swing.BorderFactory.createEmptyBorder(12, 12, 12, 6));
+    panelIzquierdo.add(scroll, java.awt.BorderLayout.CENTER);
+    panelIzquierdo.add(panelBotones, java.awt.BorderLayout.SOUTH);
+
+    panelTarjeta = new TarjetaClientePanel();
+    panelEstado = new IndicadorEstadoPanel();
+    panelContador = new ContadorServicioPanel();
+    panelProgreso = new BarraProgresoPanel();
+
+    javax.swing.JPanel panelDerecho = new javax.swing.JPanel();
+    panelDerecho.setBackground(new java.awt.Color(35, 35, 48));
+    panelDerecho.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    panelDerecho.setLayout(new javax.swing.BoxLayout(panelDerecho, javax.swing.BoxLayout.Y_AXIS));
+
+    javax.swing.JLabel titulo = new javax.swing.JLabel("DETALLE DEL VEHÍCULO");
+    titulo.setForeground(java.awt.Color.WHITE);
+    titulo.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14));
+    titulo.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+
+    panelTarjeta.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+    panelEstado.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+    panelContador.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+    panelProgreso.setAlignmentX(java.awt.Component.LEFT_ALIGNMENT);
+
+    panelDerecho.add(titulo);
+    panelDerecho.add(javax.swing.Box.createVerticalStrut(15));
+    panelDerecho.add(panelTarjeta);
+    panelDerecho.add(javax.swing.Box.createVerticalStrut(15));
+    panelDerecho.add(panelEstado);
+    panelDerecho.add(javax.swing.Box.createVerticalStrut(15));
+    panelDerecho.add(panelContador);
+    panelDerecho.add(javax.swing.Box.createVerticalStrut(15));
+    panelDerecho.add(panelProgreso);
+    panelDerecho.add(javax.swing.Box.createVerticalGlue());
+
+    javax.swing.JSplitPane split = new javax.swing.JSplitPane(
+            javax.swing.JSplitPane.HORIZONTAL_SPLIT, panelIzquierdo, panelDerecho);
+    split.setResizeWeight(0.6);
+    split.setDividerLocation(460);
+
+    jTabbedPane1.addTab("Monitoreo", split);
+}
+
+/** Refresca la tabla de monitoreo con los autos y su estado/duración actuales. */
+public void actualizarMonitoreo() {
+    if (tablaMonitoreo == null) {
+        return;
+    }
+    javax.swing.table.DefaultTableModel modelo =
+            (javax.swing.table.DefaultTableModel) tablaMonitoreo.getModel();
+
+    Integer idSeleccionado = null;
+    int filaSel = tablaMonitoreo.getSelectedRow();
+    if (filaSel != -1) {
+        idSeleccionado = (int) modelo.getValueAt(filaSel, 0);
+    }
+
+    modelo.setRowCount(0);
+    for (Auto a : controlador.getTodosLosAutos()) {
+        RegistroServicio r = controlador.getRegistro(a.getId_auto());
+        String estado = (r.getHora_entrada() == null) ? "Sin registrar"
+                : (r.getHora_salida() == null ? "En servicio" : "Finalizado");
+        modelo.addRow(new Object[]{
+            a.getId_auto(),
+            controlador.getNombreCliente(a.getId_cliente()),
+            a.getModelo(),
+            a.getTipo(),
+            estado,
+            r.getDuracionFormateada()
+        });
+    }
+
+    if (idSeleccionado != null) {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            if ((int) modelo.getValueAt(i, 0) == idSeleccionado) {
+                tablaMonitoreo.setRowSelectionInterval(i, i);
+                break;
+            }
+        }
+    }
+
+    actualizarPanelDetalle();
+}
+
+/** Actualiza los 4 componentes propios del panel derecho según la fila seleccionada. */
+private void actualizarPanelDetalle() {
+    if (panelTarjeta == null) {
+        return;
+    }
+    int fila = tablaMonitoreo.getSelectedRow();
+    if (fila == -1) {
+        panelTarjeta.setDatos("-", "-", "-");
+        panelEstado.setEstado(IndicadorEstadoPanel.Estado.SIN_REGISTRAR);
+        panelContador.reiniciar();
+        panelProgreso.setProgreso(0, 4);
+        return;
+    }
+
+    int idAuto = (int) tablaMonitoreo.getValueAt(fila, 0);
+
+    Auto auto = null;
+    for (Auto a : controlador.getTodosLosAutos()) {
+        if (a.getId_auto() == idAuto) {
+            auto = a;
+            break;
+        }
+    }
+    if (auto == null) {
+        return;
+    }
+
+    Cliente cliente = null;
+    for (Cliente c : controlador.getListaClientes()) {
+        if (c.getId_cliente() == auto.getId_cliente()) {
+            cliente = c;
+            break;
+        }
+    }
+    String telefono = (cliente != null) ? cliente.getTelefono() : "-";
+    panelTarjeta.setDatos(
+            controlador.getNombreCliente(auto.getId_cliente()),
+            telefono,
+            auto.getModelo() + " (" + auto.getTipo() + ")");
+
+    RegistroServicio r = controlador.getRegistro(idAuto);
+    if (r.getHora_entrada() == null) {
+        panelEstado.setEstado(IndicadorEstadoPanel.Estado.SIN_REGISTRAR);
+        panelContador.reiniciar();
+    } else if (r.getHora_salida() == null) {
+        panelEstado.setEstado(IndicadorEstadoPanel.Estado.EN_SERVICIO);
+        panelContador.iniciar(r.getHora_entrada());
+    } else {
+        panelEstado.setEstado(IndicadorEstadoPanel.Estado.FINALIZADO);
+        panelContador.iniciar(r.getHora_entrada());
+        panelContador.detener(r.getHora_salida());
+    }
+
+    java.util.ArrayList<String> servicios = controlador.getServiciosPorAuto().get(idAuto);
+    int asignados = (servicios == null) ? 0 : servicios.size();
+    panelProgreso.setProgreso(asignados, 4);
+}
 public javax.swing.JCheckBox getCheckExterior()  { return jCheckBoxExterior; }
 public javax.swing.JCheckBox getCheckInterior()  { return jCheckBoxInterior; }
 public javax.swing.JCheckBox getCheckEncerado()  { return jCheckBoxEncerado; }

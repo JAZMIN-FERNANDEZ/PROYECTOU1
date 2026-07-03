@@ -3,18 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- * Controlador único de la aplicación (fusiona lo que antes eran
- * clienteControlador, autoControlador y serviciosControlador).
- *
- * Se unifica en una sola clase para respetar mejor el patrón MVC:
- * la Vista ya no necesita conocer tres controladores distintos ni
- * exponer getters cruzados entre ellos (getControladorAuto(),
- * getControladorServicios()), sino que solo conversa con un único
- * Controlador.
- *
- * @author Usuario
- */
 
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -45,6 +33,9 @@ public class Controlador {
     // ---------- Estado: Servicios ----------
     private ArrayList<Auto> listaAutosServicio;
     private HashMap<Integer, ArrayList<String>> serviciosPorAuto;
+
+    // ---------- Estado: Registro de tiempo en servicio (para el contador) ----------
+    private final HashMap<Integer, RegistroServicio> registrosPorAuto = new HashMap<>();
 
     public Controlador(Vista vista) {
         this.vista = vista;
@@ -351,6 +342,7 @@ public class Controlador {
         JOptionPane.showMessageDialog(vista, "Autos guardados: " + todosLosAutos.size());
         vista.habilitarTab(2);
         cargarTodosLosAutos(todosLosAutos);
+        vista.actualizarMonitoreo();
     }
 
     /** Autos del cliente activo (para la pantalla de servicios) */
@@ -450,10 +442,53 @@ public class Controlador {
         vista.getCheckPulido().setSelected(false);
 
         JOptionPane.showMessageDialog(vista, "Servicios asignados al auto " + idAuto + ": " + servicios);
+        vista.actualizarMonitoreo();
     }
 
     public HashMap<Integer, ArrayList<String>> getServiciosPorAuto() {
         return serviciosPorAuto;
+    }
+
+    // =========================================================
+    //  REGISTRO DE TIEMPO EN SERVICIO (para el contador)
+    // =========================================================
+
+    /** Devuelve el registro de tiempo del auto, creándolo si aún no existe. */
+    public RegistroServicio getRegistro(int idAuto) {
+        return registrosPorAuto.computeIfAbsent(idAuto, id -> {
+            RegistroServicio r = new RegistroServicio();
+            r.setId_auto(id);
+            return r;
+        });
+    }
+
+    /** Registra la hora de entrada (llegada) del vehículo al taller. */
+    public void registrarEntradaAuto(int idAuto) {
+        RegistroServicio r = getRegistro(idAuto);
+        if (r.estaEnServicio()) {
+            JOptionPane.showMessageDialog(vista,
+                    "Este vehículo ya tiene una entrada registrada y sigue en servicio.");
+            return;
+        }
+        r.registrarEntrada();
+        vista.actualizarMonitoreo();
+    }
+
+    /** Registra la hora de salida del vehículo y calcula el tiempo total en servicio. */
+    public void registrarSalidaAuto(int idAuto) {
+        RegistroServicio r = registrosPorAuto.get(idAuto);
+        if (r == null || r.getHora_entrada() == null) {
+            JOptionPane.showMessageDialog(vista, "Primero registra la entrada de este vehículo.");
+            return;
+        }
+        if (r.getHora_salida() != null) {
+            JOptionPane.showMessageDialog(vista, "Este vehículo ya tiene salida registrada.");
+            return;
+        }
+        r.registrarSalida();
+        vista.actualizarMonitoreo();
+        JOptionPane.showMessageDialog(vista,
+                "Vehículo #" + idAuto + " salió del taller.\nTiempo total en servicio: " + r.getDuracionFormateada());
     }
 
     public void cargarServiciosDelAuto() {
